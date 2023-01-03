@@ -14,6 +14,7 @@ let video = document.querySelector('#video')
 
 const camera_button = document.querySelector("#capturecam")
 const recognize = document.querySelector("#recognize")
+let resp = document.querySelector("#respData")
 
 
 recognize.addEventListener("click", () => {
@@ -56,10 +57,12 @@ var sendData = () => {
   fetch(`/recognize`, options).then((resp) => resp.json()).then((respData) => {
     // alert(`registerd user successfully data: ${respData.status}`)
     console.log("data: ", respData)
-    if (respData.found == false) {sendData()}
-    else if (respData.found && respData.is_data){
-      console.log(respData)
-    }else {
+    if (respData.found == false) { sendData() }
+    else if (respData.found && respData.is_data) {
+      // resp.setAttribute("id", "respData") = respData;
+      // console.log(respData)
+      resp.value = `Name: ${respData.name}`
+    } else {
       alert(respData)
     }
   })
