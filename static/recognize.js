@@ -15,6 +15,10 @@ let video = document.querySelector('#video')
 const camera_button = document.querySelector("#capturecam")
 const recognize = document.querySelector("#recognize")
 let resp = document.querySelector("#respData")
+let name = document.querySelector("#name")
+let email = document.querySelector("#email")
+let phone = document.querySelector("#phone")
+let idproof = document.querySelector("#idproof")
 
 
 recognize.addEventListener("click", () => {
@@ -61,7 +65,10 @@ var sendData = () => {
     else if (respData.found && respData.is_data) {
       // resp.setAttribute("id", "respData") = respData;
       // console.log(respData)
-      resp.value = `Name: ${respData.name}`
+      name.innerHTML = respData.name
+      email.innerHTML = respData.email
+      phone.innerHTML = respData.phone_number
+      idproof.innerHTML = respData.govt_id_number
     } else {
       alert(respData)
     }
