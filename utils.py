@@ -155,7 +155,6 @@ def get_face_key(face_distance: list, tolerance: float) -> bool:
     return (found,)
 
 def save_user_data(user_id: str, user_data: UserData):
-    user_data = user_data.dict()
     data = load_user_data()
     data[user_id] = user_data
     with open("user_data.json", "w") as _f:
@@ -163,7 +162,7 @@ def save_user_data(user_id: str, user_data: UserData):
     return True
 
 
-def load_user_data(file_name: USER_FILE):
+def load_user_data(file_name: str = USER_FILE):
     data = defaultdict(list)
     try:
         with open(USER_FILE, "r") as _f:

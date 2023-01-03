@@ -55,7 +55,10 @@ async def recognition(
     """register the user"""
     # img = face_recognition.api.load_image_file(image_file.file, mode="RGB")
     image = await process_image_bytes(data.image_text)
-    return await process_image(img=image)
+    data = data.dict()
+    data.pop("image_text")
+    print("user data: ", data)
+    return await process_image(img=image, user_data=data)
 
 
 @app.post("/recognize")
@@ -82,9 +85,11 @@ async def get_user_data(img):
             known_encodings, face_to_compare=face_encodings[0]
         )
         key = np.argmin(face_distance)
+        print("keys: ", key)
         if face_distance[key] <= MIN_DISTANCE:
-            data = load_encodings()
-            return data[key]
+            print("gettting the user data")
+            data = load_user_data()
+            return data[keys[key]]
     return {}
 
 async def process_image(img, user_data: dict):
@@ -105,10 +110,13 @@ async def process_image(img, user_data: dict):
         )
         key = np.argmin(face_distance)
         if face_distance[key] <= MIN_DISTANCE:
+            # if len(data[keys[key]]) < 5:
+            #     print("written the image again")
+            #     write_encodings(encoding=face_encodings, key=keys[key])
             return {"message": "face id alreaady exists", "status": False}
     write_encodings(encoding=face_encodings[0], key=faceid)
     save_user_data(user_id=faceid, user_data=user_data)
-    return {"message": "registerd user successfully", "status": True, "faceid": faceId}
+    return {"message": "registerd user successfully", "status": True, "faceid": faceid}
 
 async def process_image_bytes(
     image_text: str
