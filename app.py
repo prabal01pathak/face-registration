@@ -71,7 +71,9 @@ async def recognition(
     data = data.dict()
     data.pop("image_text")
     print("user data: ", data)
-    return await process_image(img=image, user_data=data)
+    data = await process_image(img=image, user_data=data)
+    print("data: ", data)
+    return data
 
 
 @app.post("/recognize")
