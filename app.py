@@ -15,9 +15,11 @@ from fastapi import (
     BackgroundTasks,
     status,
     WebSocket,
+    Request
 )
 
-
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from starlette.middleware.cors import CORSMiddleware
 
 from utils import (
@@ -35,6 +37,8 @@ MIN_DISTANCE = 0.4
 
 app = FastAPI()
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
+templates = Jinja2Templates(directory="templates")
 
 origins = ["*"]
 
@@ -46,6 +50,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+@app.get("/")
+async def root(request: Request) -> templates:
+    """ show html page"""
+    return templates.TemplateResponse("index.html", {"request": request})
+
+@app.get("/recognize")
+async def root(request: Request) -> templates:
+    """ show html page"""
+    return templates.TemplateResponse("recognize.html", {"request": request})
 
 @app.post("/register")
 async def recognition(
