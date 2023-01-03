@@ -12,15 +12,11 @@ let video = document.querySelector('#video')
 //    })
 //}
 
-const registerButton = document.querySelector("#register")
-const fullname = document.querySelector("#name")
-const govtID = document.querySelector("#idno")
-const email = document.querySelector("#email")
-const phone = document.querySelector("#phone")
-const camera_button = document.querySelector("#capture")
+const camera_button = document.querySelector("#capturecam")
+const recognize = document.querySelector("#recognize")
 
 
-registerButton.addEventListener("click", () => {
+recognize.addEventListener("click", () => {
   sendData()
 })
 
@@ -46,10 +42,6 @@ var showOutput = () => {
 
 var sendData = () => {
   data = {
-    "name": fullname.value,
-    "email": email.value,
-    "phone_number": phone.value,
-    "govt_id_number": govtID.value,
     "image_text": image_data_url.split(",")[1]
   }
   var options = {
@@ -61,9 +53,14 @@ var sendData = () => {
     body: JSON.stringify(data)
   }
   console.log("otpions: ", options)
-  fetch(`/register`, options).then((resp) => resp.json()).then((respData) => {
+  fetch(`/recognize`, options).then((resp) => resp.json()).then((respData) => {
+    // alert(`registerd user successfully data: ${respData.status}`)
     console.log("data: ", respData)
-    if (respData.found == false) sendData()
-    else alert(respData.message)
+    if (respData.found == false) {sendData()}
+    else if (respData.found && respData.is_data){
+      console.log(respData)
+    }else {
+      alert(respData)
+    }
   })
 }

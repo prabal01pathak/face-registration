@@ -104,8 +104,12 @@ async def get_user_data(img):
         if face_distance[key] <= MIN_DISTANCE:
             print("gettting the user data")
             data = load_user_data()
-            return data[keys[key]]
-    return {}
+            resp = data[keys[key]]
+            resp["found"] = True
+            resp["is_data"] = True
+            resp["total_faces"] = len(face_encodings)
+            return resp
+    return {"found": True, "total_faces": len(face_encodings), "is_data": False}
 
 async def process_image(img, user_data: dict):
     face_encodings = face_recognition.api.face_encodings(
@@ -128,10 +132,10 @@ async def process_image(img, user_data: dict):
             # if len(data[keys[key]]) < 5:
             #     print("written the image again")
             #     write_encodings(encoding=face_encodings, key=keys[key])
-            return {"message": "face id alreaady exists", "status": False}
+            return {"message": "face id alreaady exists", "status": False, "found": True}
     write_encodings(encoding=face_encodings[0], key=faceid)
     save_user_data(user_id=faceid, user_data=user_data)
-    return {"message": "registerd user successfully", "status": True, "faceid": faceid}
+    return {"message": "registerd user successfully", "status": True, "faceid": faceid, "found": True}
 
 async def process_image_bytes(
     image_text: str

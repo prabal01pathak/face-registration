@@ -72,15 +72,20 @@
         <div class="text-center" style="margin-top: 10px;">
           <button class="btn-get-started">
             <i class="bi bi-play-circle">&nbsp;&nbsp;&nbsp;</i>
-            <span id="#capture">Capture</span>
+            <span id="capturecam">Capture</span>
           </button>
+          <div class="text-center"><button class="btn-get-started" id="recognize">Recognize</button></div>
         </div>
       </div>
       <div class="col-lg-4 order-1 order-lg-2">
-        <canvas id="canvas" width="410" height="280" autoplay>CANVAS</canvas>
+        <canvas hidden id="canvas" width="410" height="280" autoplay>CANVAS</canvas>
       </div>
     </div>
     </div>
+    <div>
+      <div id="#respData"></div>
+    </div>
+
 
 
   </section>
@@ -97,6 +102,7 @@
       </div>
     </div>
 
+
   </footer><!-- End Footer -->
   <!-- End Footer -->
 
@@ -105,7 +111,7 @@
   <div id="preloader"></div>
 
   <!-- Vendor JS Files -->
-  <script src="static/app.js"></script>
+  <script src="static/recognize.js"></script>
   <script src="static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="static/assets/vendor/aos/aos.js"></script>
   <script src="static/assets/vendor/glightbox/js/glightbox.min.js"></script>
