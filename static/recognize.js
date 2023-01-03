@@ -65,10 +65,10 @@ var sendData = () => {
     else if (respData.found && respData.is_data) {
       // resp.setAttribute("id", "respData") = respData;
       // console.log(respData)
-      name.innerHTML = respData.name
-      email.innerHTML = respData.email
-      phone.innerHTML = respData.phone_number
-      idproof.innerHTML = respData.govt_id_number
+      name.innerHTML = `Name: ${respData.name}`
+      email.innerHTML = `Email: ${respData.email}`
+      phone.innerHTML = `Phone Number: ${respData.phone_number}`
+      idproof.innerHTML = `Govt. ID Number: ${respData.govt_id_number}`
     } else {
       alert(respData)
     }
