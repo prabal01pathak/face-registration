@@ -21,11 +21,8 @@ let phone = document.querySelector("#phone")
 let idproof = document.querySelector("#idproof")
 
 
-recognize.addEventListener("click", () => {
-  sendData()
-})
 
-camera_button.addEventListener("click", async function () {
+window.addEventListener("load", async function () {
   let stream = await navigator.mediaDevices.getUserMedia({
     video: true,
     audio: false,
@@ -42,6 +39,7 @@ var showOutput = () => {
   image_data_url = canvas.toDataURL("image/jpeg");
   // sendMessage()
   // currentCount ++;
+  sendData()
 }
 
 
@@ -70,7 +68,8 @@ var sendData = () => {
       phone.innerHTML = `Phone Number: ${respData.phone_number}`
       idproof.innerHTML = `Govt. ID Number: ${respData.govt_id_number}`
     } else {
-      alert(respData)
+      name.innerHTML = `Found: ${respData.is_data}`
+      setTimeout(window.location.reload, 1000)
     }
   })
 }
